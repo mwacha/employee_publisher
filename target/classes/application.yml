@@ -1,0 +1,22 @@
+server:
+  port: 8091
+
+aws:
+ # sns:
+ #   url: arn:aws:sns:us-east-1:952790931786:CREATED_TOPIC
+  #sqs:
+  #  url: arn:aws:sns:us-east-1:952790931786:CREATED_TOPIC
+  region: us-east-1
+  access-key: AKIA53VWD3FFAVUSR6QL
+  secret-key: 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
+    #accessKeyId: ${AWS_KEY}
+    #secretKey: ${AWS_SECRET_KEY}
+queue:
+  user:
+    created:
+      name: CREATED_QUEUE
+      pool-size: 1-3
+environment:
+  topics-config:
+    - bean-name: topicCreated
+      topic-name: CREATED_TOPIC

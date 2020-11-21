@@ -1,0 +1,13 @@
+poc\stomp\interactions\RemovalEvent.class
+poc\stomp\http\notification\EventSender.class
+poc\stomp\dto\UserDTO$UserDTOBuilder.class
+poc\stomp\events\CreateEvent.class
+poc\stomp\config\EnvironmentProperties.class
+poc\stomp\config\TopicConfig.class
+poc\stomp\dto\UserDTO.class
+poc\stomp\events\CreateEvent$CreateEventBuilder.class
+poc\stomp\http\CreateEventController.class
+poc\stomp\http\notification\CreatedEventSender.class
+poc\stomp\config\AwsConfig.class
+poc\stomp\Application.class
+poc\stomp\config\JmsConfig.class
