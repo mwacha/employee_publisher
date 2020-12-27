@@ -1,14 +1,12 @@
-package poc.stomp.http.queue;
+package tk.mwacha.http.queue;
 
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
-import poc.stomp.events.CreateEvent;
-import poc.stomp.http.notification.Notification;
-
-import java.io.IOException;
+import tk.mwacha.events.CreateEvent;
+import tk.mwacha.http.notification.Notification;
 
 @Slf4j
 @Service

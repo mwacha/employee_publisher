@@ -1,4 +1,4 @@
-package poc.stomp.events;
+package tk.mwacha.events;
 
 import java.util.UUID;
 

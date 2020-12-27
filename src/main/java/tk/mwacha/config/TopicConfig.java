@@ -1,4 +1,4 @@
-package poc.stomp.config;
+package tk.mwacha.config;
 
 import lombok.Getter;
 import lombok.Setter;

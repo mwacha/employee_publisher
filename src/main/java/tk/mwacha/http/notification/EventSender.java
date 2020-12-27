@@ -1,4 +1,4 @@
-package poc.stomp.http.notification;
+package tk.mwacha.http.notification;
 
 public interface EventSender<E> {
 

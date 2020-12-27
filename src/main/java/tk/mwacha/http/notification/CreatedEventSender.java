@@ -1,4 +1,4 @@
-package poc.stomp.http.notification;
+package tk.mwacha.http.notification;
 
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.PublishRequest;
@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import poc.stomp.events.CreateEvent;
+import tk.mwacha.events.CreateEvent;
 
 @Slf4j
 @Component

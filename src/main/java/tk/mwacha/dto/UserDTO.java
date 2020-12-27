@@ -1,4 +1,4 @@
-package poc.stomp.dto;
+package tk.mwacha.dto;
 
 import lombok.*;
 

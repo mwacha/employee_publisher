@@ -1,10 +1,10 @@
-package poc.stomp.interactions;
+package tk.mwacha.interactions;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import poc.stomp.events.CreateEvent;
-import poc.stomp.http.notification.EventSender;
+import tk.mwacha.events.CreateEvent;
+import tk.mwacha.http.notification.EventSender;
 
 import java.util.UUID;
 

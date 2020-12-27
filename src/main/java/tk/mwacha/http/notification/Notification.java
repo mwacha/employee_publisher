@@ -1,4 +1,4 @@
-package poc.stomp.http.notification;
+package tk.mwacha.http.notification;
 
 import lombok.Getter;
 import lombok.Setter;

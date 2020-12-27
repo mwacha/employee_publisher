@@ -1,4 +1,4 @@
-package poc.stomp.http;
+package tk.mwacha.http;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import poc.stomp.dto.UserDTO;
-import poc.stomp.interactions.RemovalEvent;
+import tk.mwacha.dto.UserDTO;
+import tk.mwacha.interactions.RemovalEvent;
 
 @RestController
 @RequiredArgsConstructor

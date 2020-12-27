@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>poc.wacha</groupId>
-    <artifactId>poc_stomp</artifactId>
+    <groupId>tk.wacha</groupId>
+    <artifactId>interactions</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <amazon.sqs.jms.version>1.0.6</amazon.sqs.jms.version>
         <amazon.sdk.version>1.11.796</amazon.sdk.version>
-        <start-class>poc.stomp.Application</start-class>
+        <start-class>tk.mwacha.Application</start-class>
     </properties>
 
     <dependencies>

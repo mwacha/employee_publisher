@@ -1,4 +1,4 @@
-package poc.stomp.config;
+package tk.mwacha.config;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
