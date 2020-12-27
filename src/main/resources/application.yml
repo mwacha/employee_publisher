@@ -1,11 +1,21 @@
 server:
   port: 8091
 
+spring:
+  application:
+    name: integrations
+  spring:
+    datasource:
+      url: jdbc:postgresql://localhost:5432/integrations
+      username: postgres
+      password: postgres
+
+flyway:
+  url: jdbc:postgresql://localhost:5432/integrations
+  schemas: public
+  username: postgres
+  password: postgres
 aws:
- # sns:
- #   url: arn:aws:sns:us-east-1:952790931786:CREATED_TOPIC
-  #sqs:
-  #  url: arn:aws:sns:us-east-1:952790931786:CREATED_TOPIC
   region: us-east-1
   access-key:  ${AWS_KEY}
   secret-key: ${AWS_SECRET_KEY}   
