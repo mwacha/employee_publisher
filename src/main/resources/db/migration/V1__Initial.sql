@@ -9,22 +9,20 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE TABLE public.users (
+CREATE TABLE public.employee (
     id UUID NOT NULL DEFAULT uuid_generate_v4() NOT NULL ,
-    login text CHECK (char_length(login) <= 100) NOT NULL,
+    employee_name  text CHECK (char_length(employee_name) <= 100) NOT NULL,
     email text CHECK (char_length(email) <= 100) NOT NULL,
-    password  text CHECK (char_length(password) <= 200) NOT NULL,
-    "name"  text CHECK (char_length("name") <= 100) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE NULL,
     deleted_at TIMESTAMP WITH TIME ZONE,
-    CONSTRAINT users_pk PRIMARY KEY (id)
+    CONSTRAINT employee_pk PRIMARY KEY (id)
 );
 
-DROP TRIGGER IF EXISTS users_tgr_bu ON public.users;
+DROP TRIGGER IF EXISTS employee_tgr_bu ON public.employee;
 
-CREATE TRIGGER users_tgr_bu
+CREATE TRIGGER employee_tgr_bu
     BEFORE UPDATE
-    ON public.users
+    ON public.employee
     FOR EACH ROW
 EXECUTE PROCEDURE public.trigger_set_updated_at();

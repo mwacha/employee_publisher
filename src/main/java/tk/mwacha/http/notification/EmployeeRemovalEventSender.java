@@ -8,25 +8,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import tk.mwacha.events.CreateEvent;
+import tk.mwacha.events.sender.EmployeeRemovedEvent;
 
 @Slf4j
 @Component
 @Profile("!test")
-public class CreatedEventSender implements EventSender<CreateEvent> {
+public class EmployeeRemovalEventSender implements EventSender<EmployeeRemovedEvent> {
 
     private final AmazonSNS amazonSNS;
     private final Topic topic;
     private final Gson gson;
 
-    public CreatedEventSender(AmazonSNS amazonSNS, @Qualifier("topicCreated") Topic topic){
+    public EmployeeRemovalEventSender(AmazonSNS amazonSNS, @Qualifier("employeeRemoved") Topic topic){
         this.amazonSNS = amazonSNS;
         this.topic = topic;
         this.gson = new Gson();
     }
 
     @Override
-    public void send(CreateEvent event) {
+    public void send(EmployeeRemovedEvent event) {
         log.info("SENDING EVENT ID {}", event.getId());
         var request = new PublishRequest();
 
@@ -35,7 +35,7 @@ public class CreatedEventSender implements EventSender<CreateEvent> {
         request.setTopicArn(topic.getTopicArn());
         amazonSNS.publish(request);
 
-        log.info("EVENT CREATED HAS BEEN SENT ID {}", event.getId());
+        log.info("EVENT REMOVED HAS BEEN SENT ID {}", event.getId());
     }
 
 

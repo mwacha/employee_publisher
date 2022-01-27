@@ -4,13 +4,14 @@ server:
 spring:
   application:
     name: integrations
-  spring:
-    datasource:
-      url: jdbc:postgresql://localhost:5432/integrations
-      username: postgres
-      password: postgres
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/integrations
+    username: postgres
+    password: postgres
 
 flyway:
+  driverClassName: org.postgresql.Driver
   url: jdbc:postgresql://localhost:5432/integrations
   schemas: public
   username: postgres
@@ -20,11 +21,16 @@ aws:
   access-key:  ${AWS_KEY}
   secret-key: ${AWS_SECRET_KEY}   
 queue:
-  user:
+  employee:
     created:
-      name: CREATED_QUEUE
+      name: EMPLOYEE_CREATED_QUEUE
+      pool-size: 1-3
+    removed:
+      name: EMPLOYEE_REMOVED_QUEUE
       pool-size: 1-3
 environment:
   topics-config:
-    - bean-name: topicCreated
-      topic-name: CREATED_TOPIC
+    - bean-name: employeeCreated
+      topic-name: EMPLOYEE_CREATED_TOPIC
+    - bean-name: employeeRemoved
+      topic-name: EMPLOYEE_REMOVED_TOPIC
