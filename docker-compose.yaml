@@ -1,12 +1,76 @@
-version: '3'
+
+version: '3.1'
 services:
-  database:
-    container_name: postgres_integrations
-    image: postgres:latest
+  app:
+    container_name: employee_publisher
+    image: employee_publisher
+    build: ./
+    ports:
+      - "8080:8080"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - AWS_SECRET_KEY=secret
+      - AWS_KEY=key
+
+    depends_on:
+      - dbpostgresql
+  dbpostgresql:
+    image: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - ./scripts/postgres/1-data.sql:/docker-entrypoint-initdb.d/1-data.sql
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=integrations
+#services:
+#  springserver:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: employee_publisher
+#    image: employee_publisher
+#    entrypoint: dockerize -wait tcp://database:5432 -timeout 20s java -jar /usr/local/lib/employee_publisher.jar
+#    networks:
+#      - mwachanet
+#    tty: true
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - database
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/integrations
+#      - SPRING_DATASOURCE_USERNAME=compose-postgres
+#      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+#      - AWS_SECRET_KEY=secret
+#      - AWS_KEY=key
+#
+#  flyway_migration:
+#    image: flyway/flyway
+#    container_name: flyway
+#    environment:
+#      FLYWAY_PASSWORD: postgres
+#      FLYWAY_USER: postgres
+#    volumes:
+#      - .\migration_scripts:/flyway/sql
+#    #change back to 60
+#    command: -url=jdbc:postgresql://database:5432/ -connectRetries=1 migrate -X
+#    depends_on:
+#      - database
+#    networks:
+#      - mwachanet
+#
+#  database:
+#    container_name: postgres_db
+#    image: postgres:latest
+#    environment:
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_USER: postgres
+#      POSTGRES_DB: integrations
+#    expose:
+#      - "5432"
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - ./scripts/postgres/1-data.sql:/docker-entrypoint-initdb.d/1-data.sql
+#networks:
+#  mwachanet:
+#    driver: bridge

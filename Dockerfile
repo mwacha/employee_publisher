@@ -1,7 +1,11 @@
 
 FROM maven:3.6.0-jdk-11-slim AS build
-COPY ./src ./src
+
 COPY ./pom.xml ./pom.xml
+
+RUN mvn dependency:go-offline -B
+
+COPY ./src ./src
 
 RUN mvn -f ./pom.xml clean package
 
