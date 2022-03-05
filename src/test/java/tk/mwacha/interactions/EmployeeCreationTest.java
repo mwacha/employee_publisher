@@ -21,31 +21,27 @@ import tk.mwacha.repositories.NotificationsRepository;
 @ExtendWith(MockitoExtension.class)
 class EmployeeCreationTest {
 
-    @Captor
-    private ArgumentCaptor<Employee> captor;
+  @Captor private ArgumentCaptor<Employee> captor;
 
-    @Mock private EventSender<EmployeeCreatedEvent> eventSender;
-    @Mock private EmployeeRepository repository;
-    @Mock private NotificationsRepository notificationsRepository;
-    @Mock private MessageMapper mapper;
+  @Mock private EventSender<EmployeeCreatedEvent> eventSender;
+  @Mock private EmployeeRepository repository;
+  @Mock private NotificationsRepository notificationsRepository;
+  @Mock private MessageMapper mapper;
 
-    @InjectMocks
-    private EmployeeCreation interaction;
+  @InjectMocks private EmployeeCreation interaction;
 
-    @Test
-    void shold_create() {
-        var employee = EmployeeTestHelper.makeEmployee();
-        interaction.create(employee);
+  @Test
+  void shold_create() {
+    var employee = EmployeeTestHelper.makeEmployee();
+    interaction.create(employee);
 
-        then(repository).should().save(captor.capture());
+    then(repository).should().save(captor.capture());
 
-        assertThat(captor.getValue())
-                .isSameAs(employee)
-                .extracting("employeeName", "email")
-                .containsExactly(employee.getEmployeeName(), employee.getEmail());
+    assertThat(captor.getValue())
+        .isSameAs(employee)
+        .extracting("employeeName", "email")
+        .containsExactly(employee.getEmployeeName(), employee.getEmail());
 
-        then(eventSender).should().send(employee.toCreatedEvent());
-
-    }
-
+    then(eventSender).should().send(employee.toCreatedEvent());
+  }
 }
