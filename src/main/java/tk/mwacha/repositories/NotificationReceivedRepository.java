@@ -1,9 +1,7 @@
 package tk.mwacha.repositories;
 
+import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tk.mwacha.entities.NotificationReceived;
 
-import java.util.UUID;
-
-public interface NotificationReceivedRepository extends JpaRepository<NotificationReceived, UUID> {
-}
+public interface NotificationReceivedRepository extends JpaRepository<NotificationReceived, UUID> {}

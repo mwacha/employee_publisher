@@ -15,28 +15,27 @@ import tk.mwacha.events.sender.EmployeeCreatedEvent;
 @Profile("!test")
 public class EmployeeCreatedEventSender implements EventSender<EmployeeCreatedEvent> {
 
-    private final AmazonSNS amazonSNS;
-    private final Topic topic;
-    private final Gson gson;
+  private final AmazonSNS amazonSNS;
+  private final Topic topic;
+  private final Gson gson;
 
-    public EmployeeCreatedEventSender(AmazonSNS amazonSNS, @Qualifier("employeeCreated") Topic topic){
-        this.amazonSNS = amazonSNS;
-        this.topic = topic;
-        this.gson = new Gson();
-    }
+  public EmployeeCreatedEventSender(
+      AmazonSNS amazonSNS, @Qualifier("employeeCreated") Topic topic) {
+    this.amazonSNS = amazonSNS;
+    this.topic = topic;
+    this.gson = new Gson();
+  }
 
-    @Override
-    public void send(EmployeeCreatedEvent event) {
-        log.info("SENDING EVENT ID {}", event.getId());
-        var request = new PublishRequest();
+  @Override
+  public void send(EmployeeCreatedEvent event) {
+    log.info("SENDING EVENT ID {}", event.getId());
+    var request = new PublishRequest();
 
-        request.setMessage(gson.toJson(event));
+    request.setMessage(gson.toJson(event));
 
-        request.setTopicArn(topic.getTopicArn());
-        amazonSNS.publish(request);
+    request.setTopicArn(topic.getTopicArn());
+    amazonSNS.publish(request);
 
-        log.info("EVENT CREATED HAS BEEN SENT ID {}", event.getId());
-    }
-
-
+    log.info("EVENT CREATED HAS BEEN SENT ID {}", event.getId());
+  }
 }

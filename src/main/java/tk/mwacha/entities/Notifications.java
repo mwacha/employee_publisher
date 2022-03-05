@@ -1,16 +1,13 @@
 package tk.mwacha.entities;
 
-
-import lombok.*;
-import org.hibernate.annotations.Where;
-
-
+import java.io.Serializable;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
-import java.util.UUID;
+import lombok.*;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
@@ -22,11 +19,11 @@ import java.util.UUID;
 @Where(clause = "deleted_at is null")
 public class Notifications implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-    private String body;
-    @Builder.Default private String notificationType = "EVENT";
-    @Builder.Default private String status = "WAITING";
+  private String body;
+  @Builder.Default private String notificationType = "EVENT";
+  @Builder.Default private String status = "WAITING";
 }

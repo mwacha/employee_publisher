@@ -1,7 +1,6 @@
 package tk.mwacha.http;
 
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,28 +16,25 @@ import tk.mwacha.service.CreateRemovalSimulationService;
 @RequestMapping("api/v1/employees")
 public class EmployeeController {
 
-    private EmployeeRemoval interactionRemoval;
-    private EmployeeCreation interactionCreation;
-    private CreateRemovalSimulationService service;
+  private EmployeeRemoval interactionRemoval;
+  private EmployeeCreation interactionCreation;
+  private CreateRemovalSimulationService service;
 
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void remove(@PathVariable UUID id) {
+    interactionRemoval.remove(id);
+  }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@PathVariable UUID id) {
-        interactionRemoval.remove(id);
-    }
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
+  public void create(@RequestBody EmployeeDTO dto) {
+    interactionCreation.create(Employee.of(dto));
+  }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody EmployeeDTO dto) {
-        interactionCreation.create(Employee.of(dto));
-    }
-
-
-    @PostMapping(path = "/createRemoval", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void createRemoval(@RequestBody EmployeeDTO dto) {
-        service.createRemoval(Employee.of(dto));
-    }
-
+  @PostMapping(path = "/createRemoval", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void createRemoval(@RequestBody EmployeeDTO dto) {
+    service.createRemoval(Employee.of(dto));
+  }
 }

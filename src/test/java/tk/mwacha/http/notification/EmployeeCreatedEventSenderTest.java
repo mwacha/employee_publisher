@@ -18,38 +18,32 @@ import tk.mwacha.helpers.EmployeeTestHelper;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeCreatedEventSenderTest {
-    @Captor
-    private ArgumentCaptor<PublishRequest> captor;
+  @Captor private ArgumentCaptor<PublishRequest> captor;
 
-    @Mock
-    private AmazonSNS amazonSNS;
+  @Mock private AmazonSNS amazonSNS;
 
-    @Mock
-    private Topic topic;
+  @Mock private Topic topic;
 
-    @InjectMocks
-    private EmployeeCreatedEventSender eventSender;
+  @InjectMocks private EmployeeCreatedEventSender eventSender;
 
+  @Test
+  public void should_send_event() {
+    var event = givenEmployeeCreated();
 
-    @Test
-    public void should_send_event() {
-        var event = givenEmployeeCreated();
+    eventSender.send(event);
 
-        eventSender.send(event);
+    checkMessage(event);
+  }
 
-        checkMessage(event);
-    }
+  private void checkMessage(EmployeeCreatedEvent event) {
+    then(amazonSNS).should().publish(captor.capture());
 
-    private void checkMessage(EmployeeCreatedEvent event) {
-        then(amazonSNS).should().publish(captor.capture());
+    PublishRequest notification = captor.getValue();
 
-        PublishRequest notification = captor.getValue();
+    assertThat(notification).extracting("message").isEqualToComparingOnlyGivenFields(event);
+  }
 
-        assertThat(notification).extracting("message").isEqualToComparingOnlyGivenFields(event);
-    }
-
-    private EmployeeCreatedEvent givenEmployeeCreated() {
-        return EmployeeTestHelper.makeEmployee().toCreatedEvent();
-    }
-
+  private EmployeeCreatedEvent givenEmployeeCreated() {
+    return EmployeeTestHelper.makeEmployee().toCreatedEvent();
+  }
 }

@@ -14,19 +14,19 @@ import org.springframework.jms.support.destination.DynamicDestinationResolver;
 @EnableJms
 public class JmsConfig {
 
-    @Bean
-    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(
-            SQSConnectionFactory sqsConnectionFactory) {
-        final DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(sqsConnectionFactory);
-        factory.setDestinationResolver(new DynamicDestinationResolver());
-        factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
+  @Bean
+  public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(
+      SQSConnectionFactory sqsConnectionFactory) {
+    final DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+    factory.setConnectionFactory(sqsConnectionFactory);
+    factory.setDestinationResolver(new DynamicDestinationResolver());
+    factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
 
-        return factory;
-    }
+    return factory;
+  }
 
-    @Bean
-    public SQSConnectionFactory createSQSConnectionFactoryLocal(final AmazonSQS amazonSQS) {
-        return new SQSConnectionFactory(new ProviderConfiguration(), amazonSQS);
-    }
+  @Bean
+  public SQSConnectionFactory createSQSConnectionFactoryLocal(final AmazonSQS amazonSQS) {
+    return new SQSConnectionFactory(new ProviderConfiguration(), amazonSQS);
+  }
 }

@@ -10,14 +10,14 @@ import tk.mwacha.exceptions.CanNotParseException;
 @Slf4j
 @AllArgsConstructor
 public class MessageMapper {
-    private final ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-    public String toJson(@Validated Object object) {
-        try {
-            return objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage(), e);
-            throw new CanNotParseException();
-        }
+  public String toJson(@Validated Object object) {
+    try {
+      return objectMapper.writeValueAsString(object);
+    } catch (JsonProcessingException e) {
+      log.error(e.getMessage(), e);
+      throw new CanNotParseException();
     }
+  }
 }

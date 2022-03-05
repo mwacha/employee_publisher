@@ -151,14 +151,14 @@
             <groupId>com.coveo</groupId>
             <artifactId>fmt-maven-plugin</artifactId>
             <version>${plugin.coveo-formatter.version}</version>
-<!--            <executions>-->
-<!--                <execution>-->
-<!--                    <phase>compile</phase>-->
-<!--                    <goals>-->
-<!--                        <goal>check</goal>-->
-<!--                    </goals>-->
-<!--                </execution>-->
-<!--            </executions>-->
+            <executions>
+                <execution>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
         </plugins>
     </build>
