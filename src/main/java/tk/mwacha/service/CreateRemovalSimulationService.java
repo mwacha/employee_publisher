@@ -10,7 +10,7 @@ import tk.mwacha.interactions.EmployeeRemoval;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CreateRemovalService {
+public class CreateRemovalSimulationService {
 
   private final EmployeeCreation creation;
   private final EmployeeRemoval removal;

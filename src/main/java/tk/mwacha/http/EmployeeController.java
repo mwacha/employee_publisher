@@ -10,16 +10,16 @@ import tk.mwacha.entities.Employee;
 import tk.mwacha.http.dto.EmployeeDTO;
 import tk.mwacha.interactions.EmployeeCreation;
 import tk.mwacha.interactions.EmployeeRemoval;
-import tk.mwacha.service.CreateRemovalService;
+import tk.mwacha.service.CreateRemovalSimulationService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/employees")
 public class EmployeeController {
 
     private EmployeeRemoval interactionRemoval;
     private EmployeeCreation interactionCreation;
-    private CreateRemovalService service;
+    private CreateRemovalSimulationService service;
 
 
     @DeleteMapping("/{id}")
@@ -36,7 +36,7 @@ public class EmployeeController {
 
 
     @PostMapping(path = "/createRemoval", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createRemoval(@RequestBody EmployeeDTO dto) {
         service.createRemoval(Employee.of(dto));
     }
