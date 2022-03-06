@@ -6,6 +6,7 @@
 * Jacoco
 * Sonar
 * Mokito
+* SonarCloud (sonarcloud.io)
 
 # Como executar
 - Criar a imagem com o comando: `docker build -t employee_publisher .`
