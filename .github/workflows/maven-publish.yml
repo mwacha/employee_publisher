@@ -19,6 +19,10 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Test with Maven
+          run: mvn test --file pom.xml
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -28,8 +32,8 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }} #Configurado no projeto em settings -> secrets -> actions
+          password: ${{ secrets.DOCKERHUB_TOKEN }}    #Configurado no projeto em settings -> secrets -> actions
 
       - name: Build and push
         uses: docker/build-push-action@v2
