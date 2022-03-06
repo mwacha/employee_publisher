@@ -31,7 +31,7 @@ class EmployeeCreationTest {
   @InjectMocks private EmployeeCreation interaction;
 
   @Test
-  void shold_create() {
+  void should_create() {
     var employee = EmployeeTestHelper.makeEmployee();
     interaction.create(employee);
 

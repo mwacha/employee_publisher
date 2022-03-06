@@ -36,7 +36,7 @@ class EmployeeControllerTest {
   @InjectMocks private EmployeeController controller;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     mockMvc =
         MockMvcBuilders.standaloneSetup(controller)
             .setControllerAdvice(new CustomExceptionHandler())

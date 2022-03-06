@@ -27,7 +27,7 @@ class EmployeeCreatedEventSenderTest {
   @InjectMocks private EmployeeCreatedEventSender eventSender;
 
   @Test
-  public void should_send_event() {
+  void should_send_event() {
     var event = givenEmployeeCreated();
 
     eventSender.send(event);

@@ -30,7 +30,7 @@ class EmployeeRemovalEventSenderTest {
   @InjectMocks private EmployeeRemovalEventSender eventSender;
 
   @Test
-  public void should_send_event() {
+  void should_send_event() {
     var event = givenEmployeeRemove();
     UUID randomUUID = UUID.randomUUID();
     eventSender.send(event);

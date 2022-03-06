@@ -28,7 +28,7 @@ class EmployeeRemovalTest {
   @InjectMocks private EmployeeRemoval removal;
 
   @Test
-  public void should_remove() {
+  void should_remove() {
     var employee = EmployeeTestHelper.makeEmployee();
     given(repository.findById(employee.getId())).willReturn(Optional.of(employee));
 
@@ -39,12 +39,13 @@ class EmployeeRemovalTest {
   }
 
   @Test
-  public void should_not_remove_intern_notfound() {
+  void should_not_remove_intern_notfound() {
     var employee = EmployeeTestHelper.makeEmployee();
     given(repository.findById(employee.getId())).willReturn(Optional.empty());
 
-    assertThatThrownBy(() -> removal.remove(employee.getId()))
-        .isInstanceOf(EntityNotFoundException.class);
+    var id = employee.getId();
+
+    assertThatThrownBy(() -> removal.remove(id)).isInstanceOf(EntityNotFoundException.class);
 
     then(repository).should(never()).save(any(Employee.class));
   }
