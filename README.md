@@ -17,7 +17,7 @@ Substituir ${key} e ${secret} pelas suas credenciais.
 `--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED `
 # Sonar
 Este projeto utiliza o sonar, então precisamos ter o servidor criado  e o token gerado. <br>
-Após ter o token, é necessário configurar o arquivo settings.xml para efeturmos o login no sonar via token. <br>
+Após ter o token, é necessário configurar o arquivo settings.xml para efetuarmos o login no sonar via token. <br>
 Ex: <br>
 ```xml
 <settings>
