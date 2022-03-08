@@ -8,9 +8,9 @@ import tk.mwacha.mapper.MessageMapper;
 @Configuration
 public class MapperConfig {
 
-    @Bean
-    public MessageMapper mapper() {
-        var objectMapper = MapperFactory.create();
-        return new MessageMapper(objectMapper);
-    }
+  @Bean
+  public MessageMapper mapper() {
+    var objectMapper = MapperFactory.create();
+    return new MessageMapper(objectMapper);
+  }
 }

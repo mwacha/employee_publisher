@@ -15,28 +15,27 @@ import tk.mwacha.events.sender.EmployeeRemovedEvent;
 @Profile("!test")
 public class EmployeeRemovalEventSender implements EventSender<EmployeeRemovedEvent> {
 
-    private final AmazonSNS amazonSNS;
-    private final Topic topic;
-    private final Gson gson;
+  private final AmazonSNS amazonSNS;
+  private final Topic topic;
+  private final Gson gson;
 
-    public EmployeeRemovalEventSender(AmazonSNS amazonSNS, @Qualifier("employeeRemoved") Topic topic){
-        this.amazonSNS = amazonSNS;
-        this.topic = topic;
-        this.gson = new Gson();
-    }
+  public EmployeeRemovalEventSender(
+      AmazonSNS amazonSNS, @Qualifier("employeeRemoved") Topic topic) {
+    this.amazonSNS = amazonSNS;
+    this.topic = topic;
+    this.gson = new Gson();
+  }
 
-    @Override
-    public void send(EmployeeRemovedEvent event) {
-        log.info("SENDING EVENT ID {}", event.getId());
-        var request = new PublishRequest();
+  @Override
+  public void send(EmployeeRemovedEvent event) {
+    log.info("SENDING EVENT ID {}", event.getId());
+    var request = new PublishRequest();
 
-        request.setMessage(gson.toJson(event));
+    request.setMessage(gson.toJson(event));
 
-        request.setTopicArn(topic.getTopicArn());
-        amazonSNS.publish(request);
+    request.setTopicArn(topic.getTopicArn());
+    amazonSNS.publish(request);
 
-        log.info("EVENT REMOVED HAS BEEN SENT ID {}", event.getId());
-    }
-
-
+    log.info("EVENT REMOVED HAS BEEN SENT ID {}", event.getId());
+  }
 }

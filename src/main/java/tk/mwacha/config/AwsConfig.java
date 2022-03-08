@@ -22,65 +22,70 @@ import org.springframework.context.annotation.Profile;
 @RequiredArgsConstructor
 public class AwsConfig {
 
-    private final ConfigurableListableBeanFactory beanFactory;
-    private final EnvironmentProperties environment;
+  private final ConfigurableListableBeanFactory beanFactory;
+  private final EnvironmentProperties environment;
 
-    @Bean
-    public AWSCredentialsProvider amazonAWSCredentialsProvider(
-            @Value("${aws.secret-key}") String secretKey,
-            @Value("${aws.access-key}") String accessKeyId) {
-        return new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKeyId, secretKey));
-    }
+  @Bean
+  public AWSCredentialsProvider amazonAWSCredentialsProvider(
+      @Value("${aws.secret-key}") String secretKey,
+      @Value("${aws.access-key}") String accessKeyId) {
+    return new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKeyId, secretKey));
+  }
 
-    @Bean
-    @Profile("!development")
-    public AmazonSNS snsClient(AWSCredentialsProvider credentialsProvider,  @Value("${aws.region}") String region) {
-        var amazonSNS = AmazonSNSClient.builder().withCredentials(credentialsProvider).withRegion(region).build();
-        creatTopics(amazonSNS);
-        return amazonSNS;
-    }
+  @Bean
+  @Profile("!development")
+  public AmazonSNS snsClient(
+      AWSCredentialsProvider credentialsProvider, @Value("${aws.region}") String region) {
+    var amazonSNS =
+        AmazonSNSClient.builder().withCredentials(credentialsProvider).withRegion(region).build();
+    creatTopics(amazonSNS);
+    return amazonSNS;
+  }
 
-    @Bean
-    @Profile("!development")
-    public AmazonSQS sqsClient(AWSCredentialsProvider credentialsProvider, @Value("${aws.region}") String region) {
-        return AmazonSQSClient.builder().withCredentials(credentialsProvider).withRegion(region).build();
-    }
+  @Bean
+  @Profile("!development")
+  public AmazonSQS sqsClient(
+      AWSCredentialsProvider credentialsProvider, @Value("${aws.region}") String region) {
+    return AmazonSQSClient.builder()
+        .withCredentials(credentialsProvider)
+        .withRegion(region)
+        .build();
+  }
 
+  private void creatTopics(AmazonSNS amazonSNS) {
+    environment.getTopicsConfig().forEach(topicConfig -> createTopicBean(amazonSNS, topicConfig));
+  }
 
-    private void creatTopics(AmazonSNS amazonSNS) {
-        environment.getTopicsConfig().forEach(topicConfig -> createTopicBean(amazonSNS, topicConfig));
-    }
+  private Topic createTopicBean(AmazonSNS amazonSNS, TopicConfig config) {
+    var topic = findTopic(amazonSNS, config.getTopicName());
+    beanFactory.registerSingleton(config.getBeanName(), topic);
+    return topic;
+  }
 
-    private Topic createTopicBean(AmazonSNS amazonSNS, TopicConfig config) {
-        var topic = findTopic(amazonSNS, config.getTopicName());
-        beanFactory.registerSingleton(config.getBeanName(), topic);
-        return topic;
-    }
+  private Topic findTopic(AmazonSNS amazonSNS, String topicName) {
+    ListTopicsResult listTopicsResult;
+    String nextToken = null;
 
-    private Topic findTopic(AmazonSNS amazonSNS, String topicName) {
-        ListTopicsResult listTopicsResult;
-        String nextToken = null;
+    log.info("configuring aws topic {}", topicName);
 
-        log.info("configuring aws topic {}", topicName);
+    do {
+      if (nextToken == null) {
+        listTopicsResult = amazonSNS.listTopics();
+      } else {
+        listTopicsResult = amazonSNS.listTopics(nextToken);
+      }
+      nextToken = listTopicsResult.getNextToken();
+      var topicOption =
+          listTopicsResult.getTopics().stream()
+              .filter(topic -> topic.getTopicArn().endsWith(topicName))
+              .findFirst();
 
-        do {
-            if (nextToken == null) {
-                listTopicsResult = amazonSNS.listTopics();
-            } else {
-                listTopicsResult = amazonSNS.listTopics(nextToken);
-            }
-            nextToken = listTopicsResult.getNextToken();
-            var topicOption =
-                    listTopicsResult.getTopics().stream()
-                            .filter(topic -> topic.getTopicArn().endsWith(topicName))
-                            .findFirst();
+      if (topicOption.isPresent()) {
+        return topicOption.get();
+      }
 
-            if (topicOption.isPresent()) {
-                return topicOption.get();
-            }
+    } while (nextToken != null);
 
-        } while (nextToken != null);
-
-        throw new IllegalArgumentException("AWS Topic not found " + topicName);
-    }
+    throw new IllegalArgumentException("AWS Topic not found " + topicName);
+  }
 }
