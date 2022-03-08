@@ -19,6 +19,10 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Test with Maven
+        run: mvn test --file pom.xml
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -28,12 +32,29 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }} #Configurado no projeto em settings -> secrets -> actions
+          password: ${{ secrets.DOCKERHUB_TOKEN }}    #Configurado no projeto em settings -> secrets -> actions
 
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: mwacha/employee_publisher:latest
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mwacha_employee_publisher
 

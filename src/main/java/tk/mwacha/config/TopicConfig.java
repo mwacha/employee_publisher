@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TopicConfig {
-    private String beanName;
-    private String topicName;
+  private String beanName;
+  private String topicName;
 }
