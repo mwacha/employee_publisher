@@ -7,8 +7,6 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClient;
 import com.amazonaws.services.sns.model.ListTopicsResult;
 import com.amazonaws.services.sns.model.Topic;
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.AmazonSQSClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,16 +38,6 @@ public class AwsConfig {
         AmazonSNSClient.builder().withCredentials(credentialsProvider).withRegion(region).build();
     creatTopics(amazonSNS);
     return amazonSNS;
-  }
-
-  @Bean
-  @Profile("!development")
-  public AmazonSQS sqsClient(
-      AWSCredentialsProvider credentialsProvider, @Value("${aws.region}") String region) {
-    return AmazonSQSClient.builder()
-        .withCredentials(credentialsProvider)
-        .withRegion(region)
-        .build();
   }
 
   private void creatTopics(AmazonSNS amazonSNS) {
